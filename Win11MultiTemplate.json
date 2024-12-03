@@ -63,7 +63,7 @@
               "runOutputName": "<runOutputName>",
               "artifactTags": {
                 "source": "azVmImageBuilder",
-                "baseosimg": "windows10Multi"
+                "baseosimg": "windows11Multi"
               }
             }
           ]
