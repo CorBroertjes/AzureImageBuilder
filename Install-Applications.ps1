@@ -22,8 +22,8 @@ function Write-Log {
 
 #region Foxit Reader
 try {
-    Start-Process -filepath msiexec.exe -Wait -ErrorAction Stop -ArgumentList '/i', 'c:\temp\FoxitReader101_enu_Setup.msi', '/quiet', 'ADDLOCAL="FX_PDFVIEWER"'
-    if (Test-Path "C:\Program Files (x86)\Foxit Software\Foxit Reader\FoxitReader.exe") {
+    Start-Process -filepath msiexec.exe -Wait -ErrorAction Stop -ArgumentList '/i', 'c:\temp\FoxitPDFReader20243_enu_Setup.msi', '/quiet', 'ADDLOCAL="FX_PDFVIEWER"'
+    if (Test-Path "C:\Program Files (x86)\Foxit Software\Foxit PDF Reader\FoxitPDFReader.exe") {
         Write-Log "Foxit Reader has been installed"
     }
     else {
