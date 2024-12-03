@@ -6,8 +6,8 @@
 # The template used is from the Azure Quick Start templates
 # it creates a Windows image and outputs the finished image to a Managed IMage
 # Set the template file path and the template file name
-$Win11Url = "https://raw.githubusercontent.com/CorBroertjes/AzureImageBuilder/main/Win11MultiTemplate.json"
-$Win11FileName = "Win11MultiTemplate.json"
+$Win11Url = "https://raw.githubusercontent.com/CorBroertjes/AzureImageBuilder/main/Win11MultiAppsTemplate.json"
+$Win11FileName = "Win11MultiAppsTemplate.json"
 #Test to see if the path exists.  Create it if not
 if ((test-path .\Template) -eq $false) {
     new-item -ItemType Directory -name 'Template'
@@ -18,22 +18,27 @@ if ((test-path .\Template\$Win11FileName) -eq $true) {
     if ($confirmation -eq 'y' -or $confirmation -eq 'yes' -or $confirmation -eq 'Yes') {
         Invoke-WebRequest -Uri $Win11Url -OutFile ".\Template\$Win11FileName" -UseBasicParsing
     }
-} else {
+}
+else {
     Invoke-WebRequest -Uri $Win11Url -OutFile ".\Template\$Win11FileName" -UseBasicParsing
 }
 
-# Setup the variables
+# Set up the variables
 # The first four need to match Enable-identity.ps1 script
 # destination image resource group
 $imageResourceGroup = 'acct-ne-c-rg-aibmanagedirg'
+# Add the file archive Shared Access Signature
+$archiveSas = "https://acctcnesoftwarebuild.blob.core.windows.net/softwareresource?sp=r&st=2024-12-03T09:34:56Z&se=2024-12-03T17:34:56Z&spr=https&sv=2022-11-02&sr=c&sig=8oyg829zEt97e%2FJfBprJpH5Zs2If5Kebg%2FCt76ZkSfA%3D"
+# Add the path to the PowerShell Install Script
+$installScript = 'https://raw.githubusercontent.com/CorBroertjes/AzureImageBuilder/main/Install-Applications.ps1'
 # location (see possible locations in main docs)
 $location = (Get-AzResourceGroup -Name $imageResourceGroup).Location
 # your subscription, this will get your current subscription
 $subscriptionID = (Get-AzContext).Subscription.Id
 # name of the image to be created
-$imageName = 'aibCustomImgWin11Multi'
+$imageName = 'aibCustomImgWin11MultiApps'
 # image template name
-$imageTemplateName = 'ImageTemplateWin11Multi'
+$imageTemplateName = 'ImageTemplateWin11MultiApps'
 # distribution properties object name (runOutput), i.e. this gives you the properties of the managed image on completion
 $runOutputName = 'Win11Client'
 # Set the Template File Path
@@ -50,6 +55,8 @@ $identityNameResourceId = (Get-AzUserAssignedIdentity -ResourceGroupName $imageR
 ((Get-Content -path $templateFilePath -Raw) -replace '<runOutputName>',$runOutputName) | Set-Content -Path $templateFilePath
 ((Get-Content -path $templateFilePath -Raw) -replace '<imageName>',$imageName) | Set-Content -Path $templateFilePath
 ((Get-Content -path $templateFilePath -Raw) -replace '<imgBuilderId>',$identityNameResourceId) | Set-Content -Path $templateFilePath
+((Get-Content -path $templateFilePath -Raw) -replace '<Shared Access Signature to archive file>',$archiveSas) | Set-Content -Path $templateFilePath
+((Get-Content -path $templateFilePath -Raw) -replace '<URI to PowerShell Script>',$installScript ) | Set-Content -Path $templateFilePath
 
 # The following commands require the Az.ImageBuilder module
 # Install the PowerShell module if not already installed
@@ -69,8 +76,7 @@ Start-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $image
 # Create a VM to test 
 $Cred = Get-Credential 
 $ArtifactId = (Get-AzImageBuilderRunOutput -ImageTemplateName $imageTemplateName -ResourceGroupName $imageResourceGroup).ArtifactId
-New-AzVM -ResourceGroupName $imageResourceGroup -Image $ArtifactId -Name myWinVM01 -Credential $Cred -size Standard_B2ls_v2
-
+New-AzVM -ResourceGroupName $imageResourceGroup -Image $ArtifactId -Name myWinVM01 -Credential $Cred -size Standard_D2_v2
 
 # Remove the template deployment
 remove-AzImageBuilderTemplate -ImageTemplateName $imageTemplateName -ResourceGroupName $imageResourceGroup
