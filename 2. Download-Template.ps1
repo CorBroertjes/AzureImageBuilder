@@ -53,7 +53,7 @@ $identityNameResourceId = (Get-AzUserAssignedIdentity -ResourceGroupName $imageR
 
 # The following commands require the Az.ImageBuilder module
 # Install the PowerShell module if not already installed
-Install-Module -name 'Az.ImageBuilder' -AllowPrerelease
+Install-Module -name 'Az.ImageBuilder'
 
 # Run the deployment
 New-AzResourceGroupDeployment -ResourceGroupName $imageResourceGroup -TemplateFile $templateFilePath `
