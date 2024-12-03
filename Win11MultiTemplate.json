@@ -21,7 +21,7 @@
         "location": "[parameters('svclocation')]",
         "dependsOn": [],
         "tags": {
-          "imagebuilderTemplate": "win10multi",
+          "imagebuilderTemplate": "win11multi",
           "userIdentity": "enabled"
         },
         "identity": {
@@ -31,16 +31,16 @@
           }
         },
         "properties": {
-          "buildTimeoutInMinutes": 30,
+          "buildTimeoutInMinutes": 120,
           "vmProfile": {
-            "vmSize": "Standard_D2_v2",
+            "vmSize": "Standard_B2ls_v2",
             "osDiskSizeGB": 127
           },
           "source": {
             "type": "PlatformImage",
             "publisher": "MicrosoftWindowsDesktop",
-            "offer": "Windows-10",
-            "sku": "20h1-evd",
+            "offer": "office-365",
+            "sku": "win11-24h2-avd-m365",
             "version": "latest"
           },
           "customize": [
