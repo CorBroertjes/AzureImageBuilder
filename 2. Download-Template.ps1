@@ -16,10 +16,9 @@ if ((test-path .\Template) -eq $false) {
 if ((test-path .\Template\$Win11FileName) -eq $true) {
     $confirmation = Read-Host "Are you Sure You Want to Replace the Template?:"
     if ($confirmation -eq 'y' -or $confirmation -eq 'yes' -or $confirmation -eq 'Yes') {
-        Invoke-WebRequest -Uri $Win10Url -OutFile ".\Template\$Win11FileName" -UseBasicParsing
+        Invoke-WebRequest -Uri $Win11Url -OutFile ".\Template\$Win11FileName" -UseBasicParsing
     }
-}
-else {
+} else {
     Invoke-WebRequest -Uri $Win11Url -OutFile ".\Template\$Win11FileName" -UseBasicParsing
 }
 
