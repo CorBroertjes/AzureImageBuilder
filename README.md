@@ -8,9 +8,3 @@ Notepad++
 https://notepad-plus-plus.org/downloads/v7.8.8/  
 See comments on creating a custom setting to disable auto update message  
 https://community.notepad-plus-plus.org/post/38160  
-
-
-
-
-
-
