@@ -25,7 +25,7 @@ if ((test-path .\Template\$Win11FileName) -eq $true) {
 # Setup the variables
 # The first four need to match Enable-identity.ps1 script
 # destination image resource group
-$imageResourceGroup = 'acct-ne-c-rg-aibmanagedirg'
+$imageResourceGroup = ''
 # location (see possible locations in main docs)
 $location = (Get-AzResourceGroup -Name $imageResourceGroup).Location
 # your subscription, this will get your current subscription

@@ -26,9 +26,9 @@ else {
 # Set up the variables
 # The first four need to match Enable-identity.ps1 script
 # destination image resource group
-$imageResourceGroup = 'acct-ne-c-rg-aibmanagedirg'
+$imageResourceGroup = ''
 # Add the file archive Shared Access Signature
-$archiveSas = "https://acctcnesoftwarebuild.blob.core.windows.net/softwareresource?sp=r&st=2024-12-03T09:34:56Z&se=2024-12-03T17:34:56Z&spr=https&sv=2022-11-02&sr=c&sig=8oyg829zEt97e%2FJfBprJpH5Zs2If5Kebg%2FCt76ZkSfA%3D"
+$archiveSas = ""
 # Add the path to the PowerShell Install Script
 $installScript = 'https://raw.githubusercontent.com/CorBroertjes/AzureImageBuilder/main/Install-Applications.ps1'
 # location (see possible locations in main docs)
@@ -76,7 +76,7 @@ Start-AzImageBuilderTemplate -ResourceGroupName $imageResourceGroup -Name $image
 # Create a VM to test 
 $Cred = Get-Credential 
 $ArtifactId = (Get-AzImageBuilderTemplateRunOutput -ImageTemplateName $imageTemplateName -ResourceGroupName $imageResourceGroup).ArtifactId
-New-AzVM -ResourceGroupName $imageResourceGroup -Image $ArtifactId -Name myWinVM01 -Credential $Cred -size Standard_D2_v2
+New-AzVM -ResourceGroupName $imageResourceGroup -Image $ArtifactId -Name myWinVM01 -Credential $Cred -size Standard_B2ls_v2
 
 # Remove the template deployment
 remove-AzImageBuilderTemplate -ImageTemplateName $imageTemplateName -ResourceGroupName $imageResourceGroup
