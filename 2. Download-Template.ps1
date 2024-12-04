@@ -8,10 +8,12 @@
 # Set the template file path and the template file name
 $Win11Url = "https://raw.githubusercontent.com/CorBroertjes/AzureImageBuilder/main/Win11MultiTemplate.json"
 $Win11FileName = "Win11MultiTemplate.json"
+
 #Test to see if the path exists.  Create it if not
 if ((test-path .\Template) -eq $false) {
     new-item -ItemType Directory -name 'Template'
 } 
+
 # Confirm to overwrite file if it already exists
 if ((test-path .\Template\$Win11FileName) -eq $true) {
     $confirmation = Read-Host "Are you Sure You Want to Replace the Template?:"
@@ -25,7 +27,7 @@ if ((test-path .\Template\$Win11FileName) -eq $true) {
 # Setup the variables
 # The first four need to match Enable-identity.ps1 script
 # destination image resource group
-$imageResourceGroup = ''
+$imageResourceGroup = 'acct-ne-c-rg-aibmanagedirg'
 # location (see possible locations in main docs)
 $location = (Get-AzResourceGroup -Name $imageResourceGroup).Location
 # your subscription, this will get your current subscription

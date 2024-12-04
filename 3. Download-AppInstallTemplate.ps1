@@ -25,9 +25,9 @@ if ((test-path .\Template\$Win11FileName) -eq $true) {
 # Set up the variables
 # The first four need to match Enable-identity.ps1 script
 # destination image resource group
-$imageResourceGroup = ''
+$imageResourceGroup = 'acct-ne-c-rg-aibmanagedirg'
 # Add the file archive Shared Access Signature
-$archiveSas = ""
+$archiveSas = "https://acctcnesoftwarebuild.blob.core.windows.net/softwareresource?sp=r&st=2024-12-03T09:34:56Z&se=2024-12-03T17:34:56Z&spr=https&sv=2022-11-02&sr=c&sig=8oyg829zEt97e%2FJfBprJpH5Zs2If5Kebg%2FCt76ZkSfA%3D"
 # Add the path to the PowerShell Install Script
 $installScript = 'https://raw.githubusercontent.com/CorBroertjes/AzureImageBuilder/main/Install-Applications.ps1'
 # location (see possible locations in main docs)

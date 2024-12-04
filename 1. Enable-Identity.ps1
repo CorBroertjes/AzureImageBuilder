@@ -1,9 +1,11 @@
+# Managed Identity Azure Image Builder Service Image Creation Role
+
 # Set Variables for the commands
 # Destination image resource group name
-$imageResourceGroup = ''
+$imageResourceGroup = 'acct-ne-c-rg-aibmanagedirg'
 # Azure region
 # Supported Regions East US, East US 2, West Central US, West US, West US 2, North Europe, West Europe
-$location = ''
+$location = 'North Europe'
 # Get the subscription ID
 $subscriptionID = (Get-AzContext).Subscription.Id
 
@@ -37,7 +39,7 @@ Invoke-WebRequest -Uri $myRoleImageCreationUrl -OutFile $myRoleImageCreationPath
 $Content = Get-Content -Path $myRoleImageCreationPath -Raw
 $Content = $Content -replace '<subscriptionID>', $subscriptionID
 $Content = $Content -replace '<rgName>', $imageResourceGroup
-$Content = $Content -replace 'Azure Image Builder Service Creation Role', $imageRoleDefName
+$Content = $Content -replace 'Azure Image Builder Service Image Creation Role', $imageRoleDefName
 $Content | Out-File -FilePath $myRoleImageCreationPath -Force
 
 # Create the Role Definition
@@ -54,14 +56,16 @@ New-AzRoleAssignment @RoleAssignParams
 # Verify Role Assignment
 Get-AzRoleAssignment -ObjectId $identityNamePrincipalId | Select-Object DisplayName,RoleDefinitionName
 
-##########################################################################################################################################
+#################################################################################################################################################################
+
+# Managed Identity Azure Image Builder Service Networking Role
 
 #Set Variables for the commands
 # Destination image resource group name
-$imageResourceGroup = ''
+$imageResourceGroup = 'acct-ne-c-rg-aibmanagedirg'
 # Azure region
 # Supported Regions East US, East US 2, West Central US, West US, West US 2, North Europe, West Europe
-$location = ''
+$location = 'North Europe'
 # Get the subscription ID
 $subscriptionID = (Get-AzContext).Subscription.Id
 
