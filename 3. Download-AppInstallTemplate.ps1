@@ -18,8 +18,7 @@ if ((test-path .\Template\$Win11FileName) -eq $true) {
     if ($confirmation -eq 'y' -or $confirmation -eq 'yes' -or $confirmation -eq 'Yes') {
         Invoke-WebRequest -Uri $Win11Url -OutFile ".\Template\$Win11FileName" -UseBasicParsing
     }
-}
-else {
+} else {
     Invoke-WebRequest -Uri $Win11Url -OutFile ".\Template\$Win11FileName" -UseBasicParsing
 }
 
